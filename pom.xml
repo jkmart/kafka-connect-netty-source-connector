@@ -1,18 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	<prerequisites>
+		<maven>3.3.0</maven>
+	</prerequisites>
 
-	<parent>
-		<groupId>com.mckesson.kafka.connect</groupId>
-		<artifactId>kafka-connect-parent</artifactId>
-		<version>1.0.0</version>
-	</parent>
-
+	<groupId>com.mckesson.kafka.connect</groupId>
 	<artifactId>netty-source</artifactId>
+	<version>1.0.0</version>
+	<packaging>pom</packaging>
+	<name>kafka-connect-netty-source</name>
+	<description>Kafka Connect Netty Source</description>
+
+<!--	<modules>-->
+<!--		<module>checkstyle</module>-->
+<!--	</modules>-->
 
 	<properties>
+		<global.version>${project.version}</global.version>
+
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<!-- if true then test resources are not copies to target/test-classes:
+			https://bugs.eclipse.org/bugs/show_bug.cgi?id=407636 -->
+		<maven.test.skip>false</maven.test.skip>
+		<skipTests>false</skipTests>
+		<timestamp>${maven.build.timestamp}</timestamp>
+		<maven.build.timestamp.format>yyyyMMddHHmm</maven.build.timestamp.format>
+		<kafka.version>2.3.0</kafka.version>
+
+		<!--tests -->
+		<junit.version>4.13</junit.version>
+		<powermock.version>1.6.6</powermock.version>
+		<easymock.version>3.4</easymock.version>
+		<junit.surefire.plugin.version>3.0.0-M5</junit.surefire.plugin.version>
+		<kafka.connect.maven.plugin.version>0.12.0</kafka.connect.maven.plugin.version>
+		<connect.component.name>Parent</connect.component.name>
+		<connect.component.componentTypes>source</connect.component.componentTypes>
+
 		<connect.component.name>netty-source</connect.component.name>
 		<connect.component.componentTypes>source</connect.component.componentTypes>
 		<connect.component.title>Netty Source Connector</connect.component.title>
@@ -23,15 +50,63 @@
 		<connect.component.tags>network,syslog,http,log,netty</connect.component.tags>
 	</properties>
 
-
-
 	<dependencies>
-		<!-- parent managed deps -->
+		<!-- pollable-source deps-->
 		<dependency>
-			<groupId>com.mckesson.kafka.connect</groupId>
-			<artifactId>kafka-connect-common</artifactId>
+			<groupId>com.cronutils</groupId>
+			<artifactId>cron-utils</artifactId>
+			<version>8.0.0</version>
+		</dependency>
+		<!-- project deps -->
+		<!-- common utils project specific deps -->
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.5.6</version>
+		</dependency>
+		<dependency>
+			<groupId>com.squareup.okhttp3</groupId>
+			<artifactId>okhttp</artifactId>
+			<version>3.11.0</version>
+		</dependency>
+		<!-- kafka deps -->
+		<dependency>
+			<groupId>org.apache.kafka</groupId>
+			<artifactId>kafka-clients</artifactId>
+			<version>${kafka.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.kafka</groupId>
+			<artifactId>connect-api</artifactId>
+			<version>${kafka.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.kafka</groupId>
+			<artifactId>connect-runtime</artifactId>
+			<version>${kafka.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.kafka</groupId>
+			<artifactId>connect-transforms</artifactId>
+			<version>${kafka.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.kafka</groupId>
+			<artifactId>kafka_2.11</artifactId>
+			<version>${kafka.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.kafka</groupId>
+			<artifactId>connect-json</artifactId>
+			<version>${kafka.version}</version>
 		</dependency>
 
+		<!-- shared 3rd party libs -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-csv</artifactId>
+			<version>1.5</version>
+		</dependency>
 		<!-- project specific deps -->
 		<dependency>
 			<groupId>io.netty</groupId>
@@ -43,16 +118,177 @@
 			<artifactId>commons-beanutils</artifactId>
 			<version>1.9.2</version>
 		</dependency>
+		<!-- TEST -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.easymock</groupId>
+			<artifactId>easymock</artifactId>
+			<version>${easymock.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-module-junit4</artifactId>
+			<version>${powermock.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-api-easymock</artifactId>
+			<version>${powermock.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-checkstyle-plugin</artifactId>
+			<version>3.1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-compiler-plugin</artifactId>
+			<version>3.8.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-surefire-plugin</artifactId>
+			<version>${junit.surefire.plugin.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-jar-plugin</artifactId>
+			<version>3.2.0</version>
+		</dependency>
 	</dependencies>
-	
-	
-	<distributionManagement>
-			<repository>
-				<id>bintray-vrudenskyi</id>
-				<name>Bintray vrudenskyi kafka-connect</name>
-				<url>https://api.bintray.com/maven/vrudenskyi/kafka-connect/kafka-connect-netty-source/;publish=1</url>
-			</repository>
-	</distributionManagement>
 
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>3.1.2</version>
+				<executions>
+					<execution>
+						<id>validate</id>
+						<phase>validate</phase>
+						<configuration>
+							<configLocation>checkstyle.xml</configLocation>
+							<encoding>UTF-8</encoding>
+							<consoleOutput>true</consoleOutput>
+							<failsOnError>true</failsOnError>
+							<includeResources>false</includeResources>
+							<includeTestResources>false</includeTestResources>
+						</configuration>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>${junit.surefire.plugin.version}</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.apache.maven.surefire</groupId>
+						<artifactId>surefire-junit47</artifactId>
+						<version>${junit.surefire.plugin.version}</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<excludes>
+						<exclude>**/*IT.java</exclude>
+						<exclude>**/*IntegrationTest.java</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.2.0</version>
+				<configuration>
+					<archive>
+						<manifest>
+							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+							<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>3.1.0</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
 
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+
+	</build>
+
+	<repositories>
+		<repository>
+			<id>confluent</id>
+			<name>Confluent</name>
+			<url>https://packages.confluent.io/maven/</url>
+		</repository>
+		<repository>
+			<id>repo.spring.io</id>
+			<name>repo.spring.io</name>
+			<url>https://repo.spring.io/plugins-release/</url>
+		</repository>
+	</repositories>
+
+	<profiles>
+		<profile>
+			<id>confluent-hub</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>io.confluent</groupId>
+						<version>${kafka.connect.maven.plugin.version}</version>
+						<artifactId>kafka-connect-maven-plugin</artifactId>
+						<configuration>
+							<componentTypes>source</componentTypes>
+							<supportProviderName>J. K. Martin</supportProviderName>
+							<supportSummary>Support provided through community involvement</supportSummary>
+							<ownerType>private</ownerType>
+							<ownerName>J. Kerry Martin</ownerName>
+							<ownerUsername>jkmart</ownerUsername>
+							<ownerUrl>https://github.com/jkmart</ownerUrl>
+							<confluentControlCenterIntegration>true</confluentControlCenterIntegration>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>
