@@ -276,16 +276,23 @@
 						<groupId>io.confluent</groupId>
 						<version>${kafka.connect.maven.plugin.version}</version>
 						<artifactId>kafka-connect-maven-plugin</artifactId>
-						<configuration>
-							<componentTypes>source</componentTypes>
-							<supportProviderName>J. K. Martin</supportProviderName>
-							<supportSummary>Support provided through community involvement</supportSummary>
-							<ownerType>private</ownerType>
-							<ownerName>J. Kerry Martin</ownerName>
-							<ownerUsername>jkmart</ownerUsername>
-							<ownerUrl>https://github.com/jkmart</ownerUrl>
-							<confluentControlCenterIntegration>true</confluentControlCenterIntegration>
-						</configuration>
+						<executions>
+							<execution>
+								<goals>
+									<goal>kafka-connect</goal>
+								</goals>
+								<configuration>
+									<componentTypes>source</componentTypes>
+									<supportProviderName>J. K. Martin</supportProviderName>
+									<supportSummary>Support provided through community involvement</supportSummary>
+									<ownerType>private</ownerType>
+									<ownerName>J. Kerry Martin</ownerName>
+									<ownerUsername>jkmart</ownerUsername>
+									<ownerUrl>https://github.com/jkmart</ownerUrl>
+									<confluentControlCenterIntegration>true</confluentControlCenterIntegration>
+								</configuration>
+							</execution>
+						</executions>
 					</plugin>
 				</plugins>
 			</build>

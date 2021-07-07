@@ -1,0 +1,8 @@
+{
+  "name": "netty-connector-tcp",
+  "tasks.max": 1,
+  "connector.class": "com.mckesson.kafka.connect.nettysource.NettySourceConnector",
+  "topic": "network-data",
+  "transport.protocol": "TCP",
+  "port": 1234
+}
