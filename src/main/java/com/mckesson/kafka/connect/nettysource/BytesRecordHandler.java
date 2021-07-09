@@ -42,13 +42,13 @@ public class BytesRecordHandler extends SourceRecordHandler {
       msg = buffer.array();
     } catch (Exception exception) {
       exception.printStackTrace();
+      LOG.warn("Could not get bytes from buffer", exception);
     }
     if (msg == null) {
       return;
     }
     Map<String, ?> sourcePartition = new HashMap<>();
     Map<String, ?> sourceOffset = new HashMap<>();
-    //
 
     if (recordQueue == null) {
       throw new IllegalStateException("recordQueue is not configured");
