@@ -10,13 +10,8 @@
 	<groupId>com.mckesson.kafka.connect</groupId>
 	<artifactId>netty-source</artifactId>
 	<version>1.0.0</version>
-	<packaging>pom</packaging>
 	<name>kafka-connect-netty-source</name>
 	<description>Kafka Connect Netty Source</description>
-
-<!--	<modules>-->
-<!--		<module>checkstyle</module>-->
-<!--	</modules>-->
 
 	<properties>
 		<global.version>${project.version}</global.version>
@@ -282,19 +277,24 @@
 									<goal>kafka-connect</goal>
 								</goals>
 								<configuration>
-									<componentTypes>source</componentTypes>
 									<supportProviderName>J. K. Martin</supportProviderName>
 									<supportSummary>Support provided through community involvement</supportSummary>
 									<ownerType>private</ownerType>
 									<ownerName>J. Kerry Martin</ownerName>
 									<ownerUsername>jkmart</ownerUsername>
 									<ownerUrl>https://github.com/jkmart</ownerUrl>
-									<confluentControlCenterIntegration>true</confluentControlCenterIntegration>
+<!--									<confluentControlCenterIntegration>true</confluentControlCenterIntegration>-->
 								</configuration>
 							</execution>
 						</executions>
 					</plugin>
 				</plugins>
+				<resources>
+					<resource>
+						<directory>src/main/resources</directory>
+						<filtering>true</filtering>
+					</resource>
+				</resources>
 			</build>
 		</profile>
 	</profiles>

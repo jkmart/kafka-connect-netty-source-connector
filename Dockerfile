@@ -1,7 +1,7 @@
 FROM maven:3.8.1-adoptopenjdk-8 as builder
 WORKDIR /app
 COPY . .
-RUN mvn kafka-connect:kafka-connect -P confluent-hub
+RUN mvn package -P confluent-hub
 
 FROM confluentinc/cp-server-connect-base:6.1.2 as runtime
 
