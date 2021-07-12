@@ -33,7 +33,7 @@ public class BytesRecordHandler extends SourceRecordHandler {
   }
 
   @Override
-  public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) throws Exception {
+  public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) {
 
     byte[] msg = null;
 

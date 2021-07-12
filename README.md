@@ -1,3 +1,5 @@
+# Kafka Connect Netty Source
+
 This connector allows Kafka Connect to receive data from network.  Connector implemented on top of [netty.io](https://netty.io/) (3.x).
 
 Project forked from the following repositories:
@@ -5,6 +7,34 @@ https://github.com/vrudenskyi/kafka-connect-parent
 https://github.com/vrudenskyi/kafka-connect-common
 https://github.com/vrudenskyi/kafka-connect-pollable-source
 https://github.com/vrudenskyi/kafka-connect-netty-source
+
+# Build
+## Maven
+Using JDK 1.8+ and Maven 3.3.0+, use the `confluent-hub` profile to create the JAR and ZIP file to install in Kafka Connect workers:
+```bash
+mvn clean package -P confluent-hub
+```
+
+## Dockerfile
+### Method 1
+Use the multi-stage `Dockerfile` which builds the JAR and ZIP files in a Maven image, then copies both to a Kafka Connect image to install.
+
+### Method 2
+Build the project using:
+```bash
+mvn clean package -P confluent-hub
+```
+
+Then build `Dockerfile-packaged` which will copy the target ZIP file from the local system into the container and run the `confluent-hub` command.
+Recommended when running the project locally to save time and not re-download all of the Maven dependencies each time.
+
+# Run
+## Local Docker Compose
+Use docker-compose to run a Confluent Platform setup that includes the extended Connector image.
+
+```bash
+docker-compose up -d
+```
 
 # Configuration
 
@@ -149,4 +179,15 @@ pipeline.factory.class=com.mckesson.kafka.connect.nettysource.HttpPipelineFactor
 pipeline.factory.handlers=recordHandler
 pipeline.factory.handlers.recordHandler.class=com.mckesson.kafka.connect.nettysource.HttpRequestContentRecordHandler
 
+```
+
+#### UDP input connector and bytes message handler
+```properties
+connector.class=com.mckesson.kafka.connect.nettysource.NettySourceConnector
+tasks.max=1
+topic=snmp_bytes
+ports=10161
+transport.protocol=UDP
+
+pipeline.factory.class=io.confluent.kafka.connect.nettysource.BytesUdpPipelineFactory
 ```
