@@ -1,0 +1,13 @@
+{
+  "name": "dev.snmp-source.bytes",
+  "config": {
+    "connector.class": "com.mckesson.kafka.connect.nettysource.NettySourceConnector",
+    "errors.tolerance": "all",
+    "errors.log.enable": "true",
+    "errors.log.include.messages": "true",
+    "port": "10161",
+    "transport.protocol": "UDP",
+    "topic": "test.snmp",
+    "pipeline.factory.class": "io.confluent.kafka.connect.nettysource.BytesUdpPipelineFactory"
+  }
+}

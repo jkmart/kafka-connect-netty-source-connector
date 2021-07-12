@@ -277,7 +277,6 @@
 									<goal>kafka-connect</goal>
 								</goals>
 								<configuration>
-									<supportProviderName>J. K. Martin</supportProviderName>
 									<supportSummary>Support provided through community involvement</supportSummary>
 									<ownerType>private</ownerType>
 									<ownerName>J. Kerry Martin</ownerName>

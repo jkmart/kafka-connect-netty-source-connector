@@ -1,5 +1,4 @@
 /**
- * Copyright  Vitalii Rudenskyi (vrudenskyi@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,8 +12,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.mckesson.kafka.connect.nettysource;
+package io.confluent.kafka.connect.nettysource;
 
+import com.mckesson.kafka.connect.nettysource.NettyPipelineFactory;
+import com.mckesson.kafka.connect.nettysource.NettySourceConnectorConfig;
+import com.mckesson.kafka.connect.nettysource.SinglePacketHandler;
+import com.mckesson.kafka.connect.nettysource.SourceRecordHandler;
 import org.jboss.netty.channel.ChannelHandler;
 
 import java.util.LinkedHashMap;

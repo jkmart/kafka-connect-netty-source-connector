@@ -1,5 +1,11 @@
 This connector allows Kafka Connect to receive data from network.  Connector implemented on top of [netty.io](https://netty.io/) (3.x).
 
+Project forked from the following repositories:
+https://github.com/vrudenskyi/kafka-connect-parent
+https://github.com/vrudenskyi/kafka-connect-common
+https://github.com/vrudenskyi/kafka-connect-pollable-source
+https://github.com/vrudenskyi/kafka-connect-netty-source
+
 # Configuration
 
 ## NettySourceConnector
