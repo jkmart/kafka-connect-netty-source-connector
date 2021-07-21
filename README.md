@@ -189,5 +189,5 @@ topic=snmp_bytes
 ports=10161
 transport.protocol=UDP
 
-pipeline.factory.class=io.confluent.kafka.connect.nettysource.BytesUdpPipelineFactory
+pipeline.factory.class=com.github.jkmart.kafka.connect.nettysource.BytesUdpPipelineFactory
 ```

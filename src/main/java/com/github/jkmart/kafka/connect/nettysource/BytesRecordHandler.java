@@ -12,7 +12,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.confluent.kafka.connect.nettysource;
+package com.github.jkmart.kafka.connect.nettysource;
 
 import com.mckesson.kafka.connect.nettysource.SourceRecordHandler;
 import org.apache.kafka.connect.data.Schema;
